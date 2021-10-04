@@ -2,6 +2,7 @@ var express = require("express")
 var bodyParser = require("body-parser")
 var mongoose = require("mongoose")
 const card = require('./models/card');
+const contact = require('./models/contact');
 var path = require('path');
 const app = express()
 app.use(bodyParser.json())
@@ -36,6 +37,34 @@ app.post('/add-data',(req,res)=>{
 })*/
 })
 
+app.post('/add-contact',(req,res)=>{
+    const Contact = new contact({
+       name : ""+req.body.name,
+       phone : ""+req.body.phone,
+       email : ""+req.body.email,
+       message : ""+req.body.message
+    });
+Contact.save()/*
+    .then((result)=> ({
+        res.send(result)
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+  })*/
+  })
+  app.post('/login',(req,res)=>{
+    db.card.find({email : req.body.email, password : req.body.password})
+    /*
+    .then((result)=> ({
+        res.send(result)
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+  })*/
+  })
+  //db.emails.find({"from.address" : "i.st20@gmail.com", "tos.address" : "ron@gmail.com"})
 /*
 const connectDB = async()=>{
     await mongoose.connect(URI);
