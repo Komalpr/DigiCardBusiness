@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/Komalpr/DigiCardBusiness/issues"
   },
-  "homepage": "https://github.com/Komalpr/DigiCardBusiness#readme"
+  "homepage": "https://github.com/Komalpr/DigiCardBusiness#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.13"
+  },
+  "devDependencies": {}
 }
