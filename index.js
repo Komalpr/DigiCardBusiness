@@ -4,6 +4,7 @@ var mongoose = require("mongoose")
 const card = require('./models/card');
 const contact = require('./models/contact');
 var path = require('path');
+var db = require('./Database/Database');
 const app = express()
 app.use(bodyParser.json())
 app.use(express.static('public'))
@@ -13,12 +14,7 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 
 app.set('view engine','ejs');
 
-const URI = "mongodb+srv://HamzaAkram:Hamza123@cluster0.swxnp.mongodb.net/DigiCards?retryWrites=true&w=majority";
-mongoose.connect(URI, { useUnifiedTopology:true})
-.then((result)=>console.log('Connected to the database'))
-.catch((err)=> console.log(err))
-var db = mongoose.connection;
-db.once('open',()=>console.log("Connected to database"));
+
 
 app.post('/add-data',(req,res)=>{
   const Cards = new card({
@@ -26,17 +22,19 @@ app.post('/add-data',(req,res)=>{
      lastname : ""+req.body.lastname,
      email : ""+req.body.email,
      password : ""+req.body.password
-  });
-  Cards.save()/*
-  .then((result)=> ({
-      res.send(result)
-  })
-  .catch((err)=>{
-      console.log(err)
-  })
-})*/
-})
-
+    });
+    Cards.save()
+        .then((result)=> {
+            response.writeHead(302, {
+                'Location': '/public/Signup.html'
+                //add other headers here...
+              });
+              response.end();
+        })
+        .catch((err)=>{
+            console.log(err);
+        });
+    })
 app.post('/add-contact',(req,res)=>{
     const Contact = new contact({
        name : ""+req.body.name,
@@ -44,26 +42,30 @@ app.post('/add-contact',(req,res)=>{
        email : ""+req.body.email,
        message : ""+req.body.message
     });
-Contact.save()/*
-    .then((result)=> ({
-        res.send(result)
+Contact.save()
+    .then((result)=> {
+        response.writeHead(302, {
+            'Location': 'Signup.html'
+            //add other headers here...
+          });
+          response.end();
     })
     .catch((err)=>{
-        console.log(err)
+        console.log(err);
+    });
+})
+app.get('/login',function(req, res) {
+var Username = req.body.email
+var Password = req.body.password
+
+   var Query = card.findOne({$or: [{email:Username},{password:Password}]})
+    .then((result)=> {
+      console.log(Query);
     })
-  })*/
-  })
-  app.post('/login',(req,res)=>{
-    db.card.find({email : req.body.email, password : req.body.password})
-    /*
-    .then((result)=> ({
-        res.send(result)
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
-  })*/
-  })
+})
+   
+  
+ 
   //db.emails.find({"from.address" : "i.st20@gmail.com", "tos.address" : "ron@gmail.com"})
 /*
 const connectDB = async()=>{
