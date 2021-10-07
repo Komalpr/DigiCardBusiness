@@ -1,10 +1,14 @@
 var express = require("express")
 var bodyParser = require("body-parser")
 var mongoose = require("mongoose")
-const card = require('./models/card');
+var fs = require('fs');
+var http = require('http')
 const contact = require('./models/contact');
+const card = require('./models/card');
 var path = require('path');
 var db = require('./Database/Database');
+const SignUp = require("./models/SignUp");
+const { fstat } = require("fs");
 const app = express()
 app.use(bodyParser.json())
 app.use(express.static('public'))
@@ -17,13 +21,13 @@ app.set('view engine','ejs');
 
 
 app.post('/add-data',(req,res)=>{
-  const Cards = new card({
+  const Signup = new SignUp({
      firstname : ""+req.body.firstname,
      lastname : ""+req.body.lastname,
      email : ""+req.body.email,
      password : ""+req.body.password
     });
-    Cards.save()
+    Signup.save()
         .then((result)=> {
             response.writeHead(302, {
                 'Location': '/public/Signup.html'
@@ -49,6 +53,29 @@ Contact.save()
             //add other headers here...
           });
           response.end();
+    })
+    .catch((err)=>{
+        console.log(err);
+    });
+})
+app.post('/add-card',(req,res)=>{
+    const Card = new card({
+       Name : ""+req.body.Name,
+       BName : ""+req.body.BName,
+       Email : ""+req.body.Email,
+       Phone : ""+req.body.Phone,
+       Details : ""+req.body.Details,
+       cardcheck : ""+req.body.cardcheck
+    });
+Card.save()
+    .then((result)=> {
+        res.render('/public/Card.ejs', {
+            layout: false,
+            locals: {
+                Name: result.Name
+            }
+        });
+      
     })
     .catch((err)=>{
         console.log(err);

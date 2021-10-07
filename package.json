@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Komalpr/DigiCardBusiness/issues"
   },
-  "homepage": "https://github.com/Komalpr/DigiCardBusiness#readme"
+  "homepage": "https://github.com/Komalpr/DigiCardBusiness#readme",
+  "dependencies": {
+    "ejs": "^3.1.6"
+  }
 }

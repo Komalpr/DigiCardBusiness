@@ -2,32 +2,24 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-const CardSchema = new Schema({
-    Name :{
+const SignUpSchema = new Schema({
+    firstname :{
         type: String,
         required : true
     },
-    BName : {
+    lastname : {
         type : String,
         required : true
     },
-    Email : {
+    email : {
         type : String,
         required : true
     },
-    Phone : {
-        type : String,
-        required : true
-    },
-    Details : {
-        type : String,
-        required : true
-    },
-    cardcheck : {
+    password : {
         type : String,
         required : true
     }
 }, {timestamps : true});
 
-const Card = mongoose.model('Cards', CardSchema)
-module.exports = Card;
+const SignUp= mongoose.model('SignUp', SignUpSchema)
+module.exports = SignUp;
