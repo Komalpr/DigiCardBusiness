@@ -81,14 +81,24 @@ Card.save()
         console.log(err);
     });
 })
-app.get('/login',function(req, res) {
-var Username = req.body.email
+app.post('/login',function(req, res) {
+    console.log(req.body);
+var Username = req.body.username
 var Password = req.body.password
 
+
+if(Username == "admin@gmail.com" && Password == "12345"){
+// Implement DB Login here
    var Query = card.findOne({$or: [{email:Username},{password:Password}]})
     .then((result)=> {
       console.log(Query);
+      //window.location.href = "/editor";
+      res.send('success');
     })
+    res.send('success');
+}else{
+    res.send('error');
+}
 })
    
   
