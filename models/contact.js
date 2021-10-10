@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+//Used to make new collection using Schema
+//Developed by Komal Preet
 
 const contactSchema = new Schema({
     name :{
